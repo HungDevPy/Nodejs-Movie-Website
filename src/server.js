@@ -22,7 +22,6 @@ app.engine("hbs", handlebars.engine({
 app.set("view engine", "hbs");
 app.set('views', path.join(__dirname, 'resources/views')); 
 
-
 // config express to serve static files
 app.use(express.urlencoded({ extended: true }));
 routes(app);

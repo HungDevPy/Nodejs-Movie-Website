@@ -1,25 +1,15 @@
 <div class="content">
   <div class="content__banner">
     <video controls autoplay loop muted>
-      <source src="/img/banner/your name/Your Name.mp4" type="video/mp4" />
+      <source src="{{banner_Movies.video_url}}" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
     <div class="content__banner-show">
       <div class="content__banner-name">
-        <img src="/img/banner/your name/Your_name_movie_logo.png" alt="" />
+        <img src="{{banner_Movies.logo_url}}" alt="{{banner_Movies.name}}" />
       </div>
       <p class="content__banner-description">
-        Mitsuha Miyamizu, một nữ sinh trung học, khao khát được sống cuộc sống của một cậu bé ở thành phố Tokyo nhộn
-        nhịp một giấc mơ hoàn toàn trái ngược với cuộc sống hiện tại của cô ở nông thôn. Trong khi đó ở thành phố, Taki
-        Tachibana sống một cuộc sống bận rộn khi còn là học sinh trung học trong khi vừa làm công việc bán thời gian vừa
-        hy vọng vào một tương lai trong ngành kiến trúc.
-
-        Một ngày nọ, Mitsuha tỉnh dậy trong một căn phòng không phải của mình và đột nhiên thấy mình đang sống cuộc sống
-        trong mơ ở Tokyo nhưng trong cơ thể của Taki! Ở một nơi khác, Taki thấy mình đang sống cuộc sống của Mitsuha ở
-        vùng quê khiêm tốn. Để theo đuổi câu trả lời cho hiện tượng kỳ lạ này, họ bắt đầu tìm kiếm nhau.
-
-        Kimi no Na wa. xoay quanh hành động của Mitsuha và Taki, bắt đầu có tác động mạnh mẽ đến cuộc sống của nhau, dệt
-        họ thành một tấm vải gắn kết với nhau bởi số phận và hoàn cảnh.
+        {{banner_Movies.description}}
       </p>
       <div class="content__banner--btn">
         <button class="content__banner-play">
