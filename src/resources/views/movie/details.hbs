@@ -1,0 +1,291 @@
+<div class="app_main">
+  <div class="main__screen-container">
+    <iframe src="{{movieEmbed}}" frameborder="0"></iframe>
+  </div>
+  <div class="main__description-container">
+    <div class="img-box">
+      <img src="{{movie.thumb_url}}" alt="">
+    </div>
+    <div class="content-box">
+      <div class="content-heading">
+        <h3 class="title">{{movie.name}}</h3>
+        <button class="button">
+          <i class="fa-solid fa-plus"></i>
+          <span>Thêm Vào Danh Sách</span>
+        </button>
+      </div>
+      <div class="content-base-infor">
+        <div class="base-infor">
+          <p>{{movieNation.3.list.0.name}}</p>
+        </div>
+        {{#each movieNation.1.list}}
+        <div class="base-infor">
+          <p>{{this.name}}</p>
+        </div>
+        {{/each}}
+        <div class="time">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
+            </path>
+            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"></path>
+          </svg>
+          <p>
+            {{#if movie.time}}
+            {{movie.time}}
+            {{else}}
+            Đang Cập Nhật
+            {{/if}}
+          </p>
+        </div>
+        <div class="view">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="256" cy="256" r="64"></circle>
+            <path
+              d="M394.82 141.18C351.1 111.2 304.31 96 255.76 96c-43.69 0-86.28 13-126.59 38.48C88.52 160.23 48.67 207 16 256c26.42 44 62.56 89.24 100.2 115.18C159.38 400.92 206.33 416 255.76 416c49 0 95.85-15.07 139.3-44.79C433.31 345 469.71 299.82 496 256c-26.38-43.43-62.9-88.56-101.18-114.82zM256 352a96 96 0 1 1 96-96 96.11 96.11 0 0 1-96 96z">
+            </path>
+          </svg>
+          <p>123456</p>
+        </div>
+      </div>
+      <div class="content-description">
+        <p>
+          {{movie.description}}
+        </p>
+      </div>
+      <div class="content-details">
+        <div class="item">
+          <p>Quốc Gia :</p>
+          <span>{{movieNation.4.list.0.name}}</span>
+        </div>
+        <div class="item">
+          <p>Thể Loại :</p>
+          {{#each movieNation.2.list}}
+          <span>{{this.name}},</span>
+          {{/each}}
+        </div>
+        <div class="item">
+          <p>Đạo Diễn :</p>
+          <span> Đang cập nhật</span>
+        </div>
+        <div class="item">
+          <p>Diễn Viên :</p>
+          <span>
+            {{#if movie.cast}}
+            {{movie.cast}}
+            {{else}}
+            Đang Cập Nhật
+            {{/if}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main__seri-practice">
+    <Span>Tập :</Span>
+    <div class="seri-practice">
+      {{#each moviePractice}}
+      <div class="seri-practice-card">
+        <div class="name">
+          <a href="/{{movie.slug}}">{{this.name}}</a>
+        </div>
+      </div>
+      {{/each}}
+
+
+    </div>
+  </div>
+  <div class="row_posters">
+    <div class="content__main-title">
+      <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
+      <h4 class="content__main-title-right">
+        <a href="">Xem Tất Cả</a>
+      </h4>
+    </div>
+    <div class="content__main-posters">
+      <div class="content__main-icon left">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
+      <div class="content__main-posters-row">
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=8a7dc71f6ad631c2685d467bf2927f97">
+            <img src="/img/banner/one piece red/One_Piece_Film-_Red_-_Áp_phích_Việt_Nam.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">One Piece Flim Red</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=1f16e30d78accee133bc9495ffc6bae4">
+            <img src="https://phim.nguonc.com/public/images/Film/1542.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Tên cậu là gì?</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed.streamc.xyz/embed.php?hash=7719391cf2dfb7b112bc381b058d5e76">
+            <img src="https://phim.nguonc.com/public/images/Film/2ndvx03fmREMxEgaZ1vWt756TOQ.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Chú Thuật Hồi Chiến 0</h3>
+          <div class="moviesposter-practice">1/100</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=4438c2dbc49f1182cfa3e732b8789fb0">
+            <img src="https://phim.nguonc.com/public/images/Film/143101.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">
+            Tôi Sẽ Đỡ Hết Mọi Thứ: Người Mạnh Nhất Thế Giới Với Hiểu Lầm
+            Ngược Đời Muốn Làm Mạo Hiểm Giả
+          </h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=3c77d894817fc54116f9edef839c8715">
+            <img src="https://phim.nguonc.com/public/images/Post/6/tu-hom-nay-den-luot-toi.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Từ hôm nay, đến lượt tôi!</h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed3.streamc.xyz/embed.php?hash=b9cfc0fc1f53d688acc19f1026ffae9a">
+            <img src="https://phim.nguonc.com/public/images/Film/13-phut-song-con-thumb.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">13 Phút Sống Còn</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=a3bb56eb7d9a3c5487003ea937b5654a">
+            <img src="https://phim.nguonc.com/public/images/Film/uEpFxsBse6JY4OztlsuyAQoGszy.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Vây Hãm Trên Không</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=31e9138e79803241ac0ef7449ae6360d">
+            <img src="https://phim.nguonc.com/public/images/Film/4MRpQe6zhoKc792Bbrqmp3FjdaY.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Cá Mập Không Gian</h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=02720fcc26a34d4b570f248f4edaf86b">
+            <img src="https://phim.nguonc.com/public/images/Film/j6d2GmScaSExdhMxFOfRhk36exu.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">
+            Sekai ga Horobiru Mae ni Kimi ni Aitai
+          </h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+      </div>
+      <div class="content__main-icon right">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+    </div>
+  </div>
+  <div class="row_posters">
+    <div class="content__main-title">
+      <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
+      <h4 class="content__main-title-right">
+        <a href="">Xem Tất Cả</a>
+      </h4>
+    </div>
+    <div class="content__main-posters">
+      <div class="content__main-icon left">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
+      <div class="content__main-posters-row">
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=8a7dc71f6ad631c2685d467bf2927f97">
+            <img src="/img/banner/one piece red/One_Piece_Film-_Red_-_Áp_phích_Việt_Nam.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">One Piece Flim Red</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=1f16e30d78accee133bc9495ffc6bae4">
+            <img src="https://phim.nguonc.com/public/images/Film/1542.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Tên cậu là gì?</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed.streamc.xyz/embed.php?hash=7719391cf2dfb7b112bc381b058d5e76">
+            <img src="https://phim.nguonc.com/public/images/Film/2ndvx03fmREMxEgaZ1vWt756TOQ.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Chú Thuật Hồi Chiến 0</h3>
+          <div class="moviesposter-practice">1/100</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed1.streamc.xyz/embed.php?hash=4438c2dbc49f1182cfa3e732b8789fb0">
+            <img src="https://phim.nguonc.com/public/images/Film/143101.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">
+            Tôi Sẽ Đỡ Hết Mọi Thứ: Người Mạnh Nhất Thế Giới Với Hiểu Lầm
+            Ngược Đời Muốn Làm Mạo Hiểm Giả
+          </h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=3c77d894817fc54116f9edef839c8715">
+            <img src="https://phim.nguonc.com/public/images/Post/6/tu-hom-nay-den-luot-toi.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Từ hôm nay, đến lượt tôi!</h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed3.streamc.xyz/embed.php?hash=b9cfc0fc1f53d688acc19f1026ffae9a">
+            <img src="https://phim.nguonc.com/public/images/Film/13-phut-song-con-thumb.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">13 Phút Sống Còn</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=a3bb56eb7d9a3c5487003ea937b5654a">
+            <img src="https://phim.nguonc.com/public/images/Film/uEpFxsBse6JY4OztlsuyAQoGszy.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Vây Hãm Trên Không</h3>
+          <div class="moviesposter-practice">1/1</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=31e9138e79803241ac0ef7449ae6360d">
+            <img src="https://phim.nguonc.com/public/images/Film/4MRpQe6zhoKc792Bbrqmp3FjdaY.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">Cá Mập Không Gian</h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+        <div class="moviesposter-wrapper">
+          <a href="https://embed4.streamc.xyz/embed.php?hash=02720fcc26a34d4b570f248f4edaf86b">
+            <img src="https://phim.nguonc.com/public/images/Film/j6d2GmScaSExdhMxFOfRhk36exu.jpg" alt="" />
+          </a>
+          <h3 class="moviesposter-title">
+            Sekai ga Horobiru Mae ni Kimi ni Aitai
+          </h3>
+          <div class="moviesposter-practice">1/10</div>
+          <div class="moviesposter-HD">HD</div>
+        </div>
+      </div>
+      <div class="content__main-icon right">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+    </div>
+  </div>
+
+</div>
