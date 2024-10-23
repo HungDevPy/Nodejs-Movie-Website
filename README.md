@@ -36,7 +36,7 @@
 
 1. **Start the application:**  
    ```bash
-   npm start
+   npm run dev
    ```  
 
 2. The application will make an HTTP request to **FilmWeb** to retrieve movie data.  
