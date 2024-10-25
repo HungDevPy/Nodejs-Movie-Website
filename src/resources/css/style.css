@@ -47,6 +47,7 @@ html {
 
 .header__directory {
   margin-left: 20px;
+  display: flex;
 }
 
 .header__directory-link {
@@ -59,6 +60,38 @@ html {
   margin: 0 20px;
 }
 
+.header__directory--category {
+  left: 45%;
+  position: absolute;
+  top: 43px;
+  visibility: hidden;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border-radius: 5px;
+  align-items: center;
+  justify-items: center;
+}
+.header__directory-category-link {
+  list-style: none;
+  text-align: center;
+  padding: 5px 5px;
+}
+.header__directory-category-link a {
+  display: block;
+  text-decoration: none;
+  color: var(--color-gray-white);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 14px;
+}
+.header__directory-category-link a:hover {
+  background-color: rgba(139, 92, 246, 1);
+  color: var(--color-with);
+  border-radius: 5px; 
+}
+
 .header__directory-link::after {
   content: "";
   position: absolute;
@@ -67,9 +100,9 @@ html {
   width: 0;
   height: 2px;
   background-color: var(--color-with);
-  /* Thay đổi màu sắc dòng gạch chân tại đây */
   transition: width 0.3s ease;
 }
+
 
 .header__directory-link:hover::after {
   width: 100%;

@@ -13,9 +13,7 @@ class PhimleController {
             });
     }
     static phimle() {
-        const page = 1;
         const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le?page=${page}`;
-    
         return fetch(apiUrl)
             .then((response) => {
                 if (!response.ok) {

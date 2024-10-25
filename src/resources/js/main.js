@@ -66,14 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Covert to slug
 document.getElementById('searchForm').addEventListener('submit', function (e) {
-  e.preventDefault(); // Prevent the default form submission
+  e.preventDefault(); 
 
-  const keyword = document.getElementById('keyword').value; // Get the input value
-  const formattedKeyword = encodeURIComponent(keyword); // Encode the keyword for URL
+  const keyword = document.getElementById('keyword').value; 
+  const formattedKeyword = encodeURIComponent(keyword); 
 
   // Redirect to the new URL format
   window.location.href = `/search/keyword=${formattedKeyword}`;
 });
+
+
+
+
 
 // Event Search
 // document.querySelector('.header__icon-bell').addEventListener('click', () => {

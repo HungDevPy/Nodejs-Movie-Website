@@ -2,6 +2,7 @@
     "backdrops": [
         {
             "id": 1,
+            "slug": "one-piece-film-red",
             "name": "One Piece Film: Red",
             "description": "Bối cảnh One Piece Film Red diễn ra ở hòn đảo âm nhạc Elegia, nơi diva nổi tiếng bậc nhất thế giới tên Uta thực hiện buổi biểu diễn trực tiếp đầu tiên trước công chúng. Uta đứng trên sân khấu với một ước mơ giản dị rằng  “Âm nhạc của tôi sẽ khiến cho thế giới hạnh phúc”. Đằng sau hình ảnh cô ca sĩ sở hữu giọng hát được đánh giá “Ở đẳng cấp hoàn toàn khác”, là một thân thế vô cùng bí ẩn được che giấu. Băng hải tặc Mũ Rơm và các fan khác của Uta từ nhiều thế lực khác nhau như hải tặc lẫn hải quân đều đã cùng tề tựu về buổi biểu diễn này. Biến cố bắt đầu ngay khi sự thật kinh hoàng được tiết lộ rằng Uta chính là “con gái của Shanks”. Luffy và Uta lần đầu tiên hội ngộ sau lần gặp gỡ vào 12 năm trước tại Làng Foosha.",
             "logo_url": "./img/banner/one_piece_film_red/logo.png",
@@ -9,6 +10,7 @@
         },
         {
             "id": 2,
+            "slug": "ten-cau-la-gi",
             "name": "Your Name",
             "description": "Mitsuha – một nữ sinh sống tại vùng quê Nhật Bản, chán ngán cuộc sống hiện tại và luôn mong được lên Tokyo sống. Taki – một cậu nam sinh ở Tokyo, làm thêm tại một nhà hàng Ý sau giờ học, thích vẽ vời và quan tâm đến ngành kiến trúc. Cả hai bắt đầu có những giấc mơ kỳ lạ kể từ khi ngôi sao chổi Tiamat huyền thoại xuất hiện trên bầu trời. Trong mơ, Mitsuha mơ thành một cậu nam sinh ở Tokyo còn Taki mơ mình là một cô nữ sinh ở vùng quê Nhật Bản. Và họ nhanh chóng nhận ra mình đã bị hoán đổi cơ thể. Để tránh những rắc rối, họ để lại cho nhau những lời nhắn, những quy định yêu cầu người kia không được làm gì. Mọi việc cứ thế trôi qua, cho đến buổi tối khi ngôi sao chổi đi qua và tách ra một phần rơi xuống Nhật Bản, cũng từ đó Taki phát hiện cậu và Mitsuha không còn hoán đổi cho nhau nữa. Dựa vào những gì nhớ được khi còn trong hình dáng Mitsuha, Taki vẽ lại bức tranh vùng quê nơi Mitsuha sinh sống. Cậu cùng 2 người bạn Tsukasa và Okudera lên đường đi tìm đến giấc mơ của mình.",
             "logo_url": "./img/banner/your_name/Your_name_movie_logo.png",
