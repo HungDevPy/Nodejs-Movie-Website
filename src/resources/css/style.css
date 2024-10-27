@@ -67,7 +67,7 @@ html {
   visibility: hidden;
   background-color: #fff;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   border-radius: 5px;
   align-items: center;
@@ -77,6 +77,9 @@ html {
   list-style: none;
   text-align: center;
   padding: 5px 5px;
+}
+.header__directory-link.category{
+  cursor: pointer;
 }
 .header__directory-category-link a {
   display: block;
