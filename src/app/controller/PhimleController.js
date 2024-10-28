@@ -1,20 +1,24 @@
-
 class PhimleController {
     static index(req, res) {
-        Promise.all([PhimleController.phimle()])
-            .then(([movies]) => {
-                // console.log("Movies:", movies); // Log movies data
-                // console.log("Odd Movies:", odd_Movies); // Log odd movies data
-                res.render("movie/listmovie", { movies});
+        // Fetch movies from both pages in parallel
+        Promise.all([PhimleController.phimle(1), PhimleController.phimle(2)])
+            .then(([moviesPage1, moviesPage2]) => {
+                // Combine items from both pages
+                const allMovies = [...moviesPage1, ...moviesPage2];
+                
+                console.log("Phim le: ", allMovies);
+
+                res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
             })
             .catch((error) => {
                 console.error("Error fetching movies:", error);
-                res.render("movie/listmovie", { movies: []});
+                res.render("movie/listmovie", { movies: [] });
             });
     }
-    static phimle() {
-        const page = 1;
+
+    static phimle(page) {
         const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le?page=${page}`;
+
         return fetch(apiUrl)
             .then((response) => {
                 if (!response.ok) {
@@ -22,17 +26,20 @@ class PhimleController {
                 }
                 return response.json();
             })
-            .then((data) => {// Log the response data
+            .then((data) => {
+                // Log data for debugging purposes
+                console.log(`Response from page ${page}:`, data);
+
                 if (data.status === "success") {
-                    return data.items; // Return the odd movies
+                    return data.items; // Return movie items
                 } else {
                     console.error("Lỗi khi lấy dữ liệu:", data.message);
-                    return []; // Return an empty array on error
+                    return []; // Return empty array on error
                 }
             })
             .catch((error) => {
                 console.error("Lỗi mạng:", error);
-                return []; // Return an empty array on network error
+                return []; // Return empty array on network error
             });
     }
 }

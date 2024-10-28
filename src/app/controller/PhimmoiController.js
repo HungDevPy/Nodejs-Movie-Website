@@ -1,19 +1,19 @@
 
 class PhimmoiController {
     static index(req, res) {
-        Promise.all([PhimmoiController.phimmoi()])
-            .then(([movies]) => {
-                // console.log("Movies:", movies); // Log movies data
-                // console.log("Odd Movies:", odd_Movies); // Log odd movies data
-                res.render("movie/listmovie", { movies});
-            })
-            .catch((error) => {
-                console.error("Error fetching movies:", error);
-                res.render("movie/listmovie", { movies: []});
-            });
+        Promise.all([PhimmoiController.phimmoi(1),PhimmoiController.phimmoi(2)])
+        .then(([moviesPage1, moviesPage2]) => {
+            // Combine items from both pages
+            const allMovies = [...moviesPage1, ...moviesPage2];
+        
+            res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
+        })
+        .catch((error) => {
+            console.error("Error fetching movies:", error);
+            res.render("movie/listmovie", { movies: [] });
+        });
     }
-    static phimmoi() {
-        const page = 1;
+    static phimmoi(page) {
         const apiUrl = `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${page}`;
 
         return fetch(apiUrl)

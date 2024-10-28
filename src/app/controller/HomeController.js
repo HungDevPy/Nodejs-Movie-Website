@@ -1,7 +1,7 @@
 const PhimleController = require("./PhimleController");
 const PhimboController = require("./PhimboController");
 const PhimmoiController = require("./PhimmoiController");
-const { console } = require("inspector");
+const { console, url } = require("inspector");
 const path = require("path");
 const fs = require("fs").promises;
 class HomeController {
@@ -143,6 +143,40 @@ class HomeController {
         res.render("movie/listmoive", { movies: null });
       });
   }
+  static theloai(req, res) {
+    const slug = req.params.slug;
+    const apiUrl = `https://phim.nguonc.com/api/films/the-loai/${slug}?page=1`;
+    const apiUrl2 = `https://phim.nguonc.com/api/films/the-loai/${slug}?page=2`;
+
+    Promise.all([fetch(apiUrl), fetch(apiUrl2)])
+      .then((responses) => {
+        // Check if all requests are successful
+        responses.forEach((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        });
+
+        return Promise.all(responses.map((response) => response.json()));
+      })
+      .then((dataArray) => {
+        const data1 = dataArray[0]; 
+        const data2 = dataArray[1]; 
+  
+        // Merge items from both pages
+        const allMovies = [...(data1.items || []), ...(data2.items || [])];
+  
+        // Render the view with merged data
+        res.render("movie/listmovie", {
+          movies: allMovies.slice(0, 18),
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi mạng:", error.message);
+        res.render("movie/listmovie", { movies: null });
+      });
+  }
+  
 }
 
 module.exports = HomeController; // Ensure this export is correct

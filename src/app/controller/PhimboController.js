@@ -1,19 +1,21 @@
 
 class PhimboController {
     static index(req, res) {
-        Promise.all([PhimboController.phimbo()])
-            .then(([movies]) => {
-                // console.log("Movies:", movies); // Log movies data
-                // console.log("Odd Movies:", odd_Movies); // Log odd movies data
-                res.render("movie/listmovie", { movies});
-            })
-            .catch((error) => {
-                console.error("Error fetching movies:", error);
-                res.render("movie/listmovie", { movies: []});
-            });
+        Promise.all([PhimboController.phimbo(1),PhimboController.phimbo(2)])
+        .then(([moviesPage1, moviesPage2]) => {
+            // Combine items from both pages
+            const allMovies = [...moviesPage1, ...moviesPage2];
+            
+            console.log("Phim le: ", allMovies);
+
+            res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
+        })
+        .catch((error) => {
+            console.error("Error fetching movies:", error);
+            res.render("movie/listmovie", { movies: [] });
+        });
     }
-    static phimbo() {
-        const page = 1;
+    static phimbo(page) {
         const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-bo?page=${page}`;
     
         return fetch(apiUrl)
