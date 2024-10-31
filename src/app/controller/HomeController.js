@@ -26,7 +26,7 @@ class HomeController {
     ])
       .then(([movies, odd_Movies, seri_Movies,banner_Movies]) => {
         console.log("Baner: ", banner_Movies.logo_url);
-        // console.log("Movies:", movies); // Log movies data
+        console.log("Movies:", movies); // Log movies data
         // console.log("Odd Movies:", odd_Movies); // Log odd movies data
         res.render("home", { movies, odd_Movies, seri_Movies,banner_Movies });
       })
@@ -35,42 +35,49 @@ class HomeController {
         res.render("home", { movies: [], odd_Movies: [], seri_Movies: [] ,banner_Movies: []});
       });
   }
-  static slug(req, res) {
+  static async slug(req, res) {
     const slug = req.params.slug;
     const apiUrl = `https://phim.nguonc.com/api/film/${slug}`;
-
-    fetch(apiUrl)
-      .then((response) => {
-        // Kiểm tra nếu phản hồi không phải là 200 OK
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        // Kiểm tra Content-Type
-        const contentType = response.headers.get("Content-Type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error(`Expected JSON, but got: ${contentType}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.status === "success") {
-          // Log the movie data
-          res.render("movie/details", {
-            movieId: data.movie.id,
-            movie: data.movie,
-            movieNation: data.movie.category,
-            moviePractice: data.movie.episodes[0].items,
-            movieEmbed: data.movie.episodes[0].items[0].embed,
-          });
-        } else {
-          res.render("movie/details", { movie: null });
-        }
-      })
-      .catch((error) => {
-        console.error("Lỗi mạng:", error.message);
+  
+    try {
+      const [phimmoi, phimle, phimbo] = await Promise.all([
+        PhimmoiController.phimmoi(),
+        PhimleController.phimle(),
+        PhimboController.phimbo(),
+      ]);
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const contentType = response.headers.get("Content-Type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(`Expected JSON, but got: ${contentType}`);
+      }
+  
+      const data = await response.json();
+      if (data.status === "success") {
+        console.log(phimmoi)
+        // Render the movie details page
+        res.render("movie/details", {
+          movieId: data.movie.id,
+          movie: data.movie,
+          movieNation: data.movie.category,
+          moviePractice: data.movie.episodes[0].items,
+          movieEmbed: data.movie.episodes[0].items[0].embed,
+          phimmoi, 
+          phimle,  
+          phimbo,  
+        });
+      } else {
         res.render("movie/details", { movie: null });
-      });
+      }
+    } catch (error) {
+      console.error("Lỗi mạng:", error.message);
+      res.render("movie/details", { movie: null });
+    }
   }
+  
   static tap(req, res) {
     const slug = req.params.slug;
     const tap = req.params.name;

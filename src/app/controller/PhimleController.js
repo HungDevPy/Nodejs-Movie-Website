@@ -6,7 +6,6 @@ class PhimleController {
                 // Combine items from both pages
                 const allMovies = [...moviesPage1, ...moviesPage2];
                 
-                console.log("Phim le: ", allMovies);
 
                 res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
             })
@@ -17,7 +16,7 @@ class PhimleController {
     }
 
     static phimle(page) {
-        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le?page=${page}`;
+        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le`;
 
         return fetch(apiUrl)
             .then((response) => {
@@ -27,9 +26,6 @@ class PhimleController {
                 return response.json();
             })
             .then((data) => {
-                // Log data for debugging purposes
-                console.log(`Response from page ${page}:`, data);
-
                 if (data.status === "success") {
                     return data.items; // Return movie items
                 } else {

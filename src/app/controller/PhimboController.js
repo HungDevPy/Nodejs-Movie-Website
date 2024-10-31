@@ -6,7 +6,6 @@ class PhimboController {
             // Combine items from both pages
             const allMovies = [...moviesPage1, ...moviesPage2];
             
-            console.log("Phim le: ", allMovies);
 
             res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
         })
@@ -16,7 +15,7 @@ class PhimboController {
         });
     }
     static phimbo(page) {
-        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-bo?page=${page}`;
+        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-bo`;
     
         return fetch(apiUrl)
             .then((response) => {

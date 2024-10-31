@@ -14,7 +14,7 @@ class PhimmoiController {
         });
     }
     static phimmoi(page) {
-        const apiUrl = `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${page}`;
+        const apiUrl = `https://phim.nguonc.com/api/films/phim-moi-cap-nhat`;
 
         return fetch(apiUrl)
             .then((response) => response.json())
