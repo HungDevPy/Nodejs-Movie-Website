@@ -24,21 +24,26 @@ class HomeController {
       PhimboController.phimbo(),
       HomeController.banner(),
     ])
-      .then(([movies, odd_Movies, seri_Movies,banner_Movies]) => {
+      .then(([movies, odd_Movies, seri_Movies, banner_Movies]) => {
         console.log("Baner: ", banner_Movies.logo_url);
         console.log("Movies:", movies); // Log movies data
         // console.log("Odd Movies:", odd_Movies); // Log odd movies data
-        res.render("home", { movies, odd_Movies, seri_Movies,banner_Movies });
+        res.render("home", { movies, odd_Movies, seri_Movies, banner_Movies });
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
-        res.render("home", { movies: [], odd_Movies: [], seri_Movies: [] ,banner_Movies: []});
+        res.render("home", {
+          movies: [],
+          odd_Movies: [],
+          seri_Movies: [],
+          banner_Movies: [],
+        });
       });
   }
   static async slug(req, res) {
     const slug = req.params.slug;
     const apiUrl = `https://phim.nguonc.com/api/film/${slug}`;
-  
+
     try {
       const [phimmoi, phimle, phimbo] = await Promise.all([
         PhimmoiController.phimmoi(),
@@ -49,15 +54,15 @@ class HomeController {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const contentType = response.headers.get("Content-Type");
       if (!contentType || !contentType.includes("application/json")) {
         throw new Error(`Expected JSON, but got: ${contentType}`);
       }
-  
+
       const data = await response.json();
       if (data.status === "success") {
-        console.log(phimmoi)
+        console.log(phimmoi);
         // Render the movie details page
         res.render("movie/details", {
           movieId: data.movie.id,
@@ -65,9 +70,9 @@ class HomeController {
           movieNation: data.movie.category,
           moviePractice: data.movie.episodes[0].items,
           movieEmbed: data.movie.episodes[0].items[0].embed,
-          phimmoi, 
-          phimle,  
-          phimbo,  
+          phimmoi,
+          phimle,
+          phimbo,
         });
       } else {
         res.render("movie/details", { movie: null });
@@ -77,7 +82,7 @@ class HomeController {
       res.render("movie/details", { movie: null });
     }
   }
-  
+
   static tap(req, res) {
     const slug = req.params.slug;
     const tap = req.params.name;
@@ -85,37 +90,37 @@ class HomeController {
     console.log(apiUrl);
 
     fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                const movie = data.movie;
-                const movieId = movie.id;
-                const movieNation = movie.category;
-                const episodes = movie.episodes[0].items;
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          const movie = data.movie;
+          const movieId = movie.id;
+          const movieNation = movie.category;
+          const episodes = movie.episodes[0].items;
 
-                const currentEpisode = episodes.find(item => item.slug === tap);
-                let movieEmbed = null;
-                if (currentEpisode) {
-                    movieEmbed = currentEpisode.embed;
-                }
-                console.log(currentEpisode);
+          const currentEpisode = episodes.find((item) => item.slug === tap);
+          let movieEmbed = null;
+          if (currentEpisode) {
+            movieEmbed = currentEpisode.embed;
+          }
+          console.log(currentEpisode);
 
-                res.render("movie/details", {
-                    movieId,
-                    movie,
-                    movieNation,
-                    moviePractice: episodes,
-                    movieEmbed
-                });
-            } else {
-                res.render("movie/details", { movie: null });
-            }
-        })
-        .catch(error => {
-            console.error("Lỗi mạng:", error.message);
-            res.render("movie/details", { movie: null });
-        });
-}
+          res.render("movie/details", {
+            movieId,
+            movie,
+            movieNation,
+            moviePractice: episodes,
+            movieEmbed,
+          });
+        } else {
+          res.render("movie/details", { movie: null });
+        }
+      })
+      .catch((error) => {
+        console.error("Lỗi mạng:", error.message);
+        res.render("movie/details", { movie: null });
+      });
+  }
   static search(req, res) {
     const key = req.query.keyword.replace(/ /g, "+");
     const apiUrl = `https://phim.nguonc.com/api/films/search?keyword=${key}`;
@@ -152,10 +157,17 @@ class HomeController {
   }
   static theloai(req, res) {
     const slug = req.params.slug;
-    const apiUrl = `https://phim.nguonc.com/api/films/the-loai/${slug}?page=1`;
-    const apiUrl2 = `https://phim.nguonc.com/api/films/the-loai/${slug}?page=2`;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 18;
+    const maxPagesToShow = 3; 
 
-    Promise.all([fetch(apiUrl), fetch(apiUrl2)])
+    const apiUrl = `https://phim.nguonc.com/api/films/the-loai/${slug}?page=${page}`;
+    Promise.all([
+      fetch(apiUrl),
+      fetch(
+        `https://phim.nguonc.com/api/films/the-loai/${slug}?page=${page + 1}`
+      ),
+    ])
       .then((responses) => {
         // Check if all requests are successful
         responses.forEach((response) => {
@@ -167,23 +179,38 @@ class HomeController {
         return Promise.all(responses.map((response) => response.json()));
       })
       .then((dataArray) => {
-        const data1 = dataArray[0]; 
-        const data2 = dataArray[1]; 
-  
+        const data1 = dataArray[0];
+        const data2 = dataArray[1];
+
         // Merge items from both pages
         const allMovies = [...(data1.items || []), ...(data2.items || [])];
-  
-        // Render the view with merged data
+        console.log(allMovies);
+        // Calculate total items and total pages
+        const totalItems = allMovies.length; 
+        const totalPages = page + 1; 
+        const pagination = [];
+
+        // Create pagination array
+        const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+        const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+        for (let i = startPage; i <= endPage; i++) {
+          pagination.push(i);
+        }
+
+        // Render the view with merged data and pagination
         res.render("movie/listmovie", {
-          movies: allMovies.slice(0, 18),
+          movies: allMovies.slice(0, itemsPerPage),
+          currentPage: page,
+          totalPages: totalPages,
+          pagination: pagination, // Pass the pagination array
         });
       })
       .catch((error) => {
-        console.error("Lỗi mạng:", error.message);
+        console.error("Network error:", error.message);
         res.render("movie/listmovie", { movies: null });
       });
   }
-  
 }
 
 module.exports = HomeController; // Ensure this export is correct

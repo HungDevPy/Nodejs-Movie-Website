@@ -662,15 +662,27 @@ video {
 
 .pagging__container {
   display: flex;
-  color: var(--color-with);
   list-style: none;
   justify-content: center;
   padding: 12px 20px;
 }
+.pagging__container a{
+  color: var(--color-with);
+}
 
-.pagging__container-link {
+.pagging__container-link {  
   padding: 0 12px;
   cursor: pointer;
+}
+.pagging__container-items{
+  padding: 12px 12px;
+}
+.pagging__container-items.active{
+  background-color: var(--color-gray-origin);
+  border-radius: 5px;
+}
+.pagging__container-items  a{
+  text-decoration: none;
 }
 
 .main__screen-container {

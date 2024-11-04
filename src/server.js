@@ -6,6 +6,7 @@ const path = require("path");
 const handlebars = require("express-handlebars");
 const methodOverride = require('method-override');
 const routes = require('./routes');
+const { equal } = require('assert');
 // config express to use morgan
 app.use(morgan('combined'));
 
@@ -17,6 +18,11 @@ app.use(methodOverride('_method'));
 app.engine("hbs", handlebars.engine({ 
   extname: ".hbs",
   helpers:{
+    gt: (a, b) => a > b,
+    lt: (a, b) => a < b,
+    add: (a, b) => a + b,
+    sub: (a, b) => a - b,
+    eq: (a, b) => a == b,
     sum: (a,b) => a+b,
 } }));
 app.set("view engine", "hbs");

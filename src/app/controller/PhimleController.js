@@ -1,23 +1,40 @@
+const itemsPerPage = 18; 
+const maxPagesToShow = 3; // Set the maximum number of pages to display
+
 class PhimleController {
     static index(req, res) {
-        // Fetch movies from both pages in parallel
-        Promise.all([PhimleController.phimle(1), PhimleController.phimle(2)])
-            .then(([moviesPage1, moviesPage2]) => {
-                // Combine items from both pages
-                const allMovies = [...moviesPage1, ...moviesPage2];
-                
+        const page = parseInt(req.query.page) || 1; // Default to page 1 if undefined
 
-                res.render("movie/listmovie", { movies: allMovies.slice(0, 18), });
+        Promise.all([PhimleController.phimle(page), PhimleController.phimle(page + 1)])
+            .then(([moviesPage1, moviesPage2]) => {
+                const allMovies = [...moviesPage1, ...moviesPage2];
+                const displayedMovies = allMovies.slice(0, itemsPerPage); 
+
+                const totalItems = moviesPage1.length + moviesPage2.length;
+                const totalPages = page+1;
+                const pagination = [];
+                const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+                const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+                
+                for (let i = startPage; i <= endPage; i++) {
+                    pagination.push(i);
+                }
+
+                res.render("movie/listmovie", {
+                    movies: displayedMovies,
+                    currentPage: page,
+                    totalPages: totalPages,
+                    pagination: pagination // Pass the pagination array
+                });
             })
             .catch((error) => {
                 console.error("Error fetching movies:", error);
-                res.render("movie/listmovie", { movies: [] });
+                res.render("movie/listmovie", { movies: [], currentPage: page, totalPages: 0, pagination: [] });
             });
     }
 
     static phimle(page) {
-        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le`;
-
+        const apiUrl = `https://phim.nguonc.com/api/films/the-loai/phim-le?page=${page}`;
         return fetch(apiUrl)
             .then((response) => {
                 if (!response.ok) {
@@ -27,15 +44,15 @@ class PhimleController {
             })
             .then((data) => {
                 if (data.status === "success") {
-                    return data.items; // Return movie items
+                    return data.items;
                 } else {
-                    console.error("Lỗi khi lấy dữ liệu:", data.message);
-                    return []; // Return empty array on error
+                    console.error("Error fetching data:", data.message);
+                    return [];
                 }
             })
             .catch((error) => {
-                console.error("Lỗi mạng:", error);
-                return []; // Return empty array on network error
+                console.error("Network error:", error);
+                return [];
             });
     }
 }
