@@ -86,26 +86,32 @@
   <div class="main__seri-practice">
     <Span>Tập :</Span>
     <div class="seri-practice">
-      {{#each moviePractice}}
-      <div class="seri-practice-card">
-        <div class="name">
-          <a href="{{../movie.slug}}/{{this.slug}}">{{this.name}}</a>
-        </div>
+      <div class="seri-practice">
+  {{#each moviePractice}}
+    <div class="seri-practice-card">
+      <div class="name">
+        {{#if this.isEpisode}}
+          <a href="{{this.slug}}">{{this.name}}</a> <!-- Hiển thị tên tập phim -->
+        {{else}}
+          <a href="{{../movie.slug}}/{{this.slug}}">{{this.name}}</a> <!-- Hiển thị tên phim -->
+        {{/if}}
       </div>
-      {{/each}}
+    </div>
+  {{/each}}
+</div>
 
 
     </div>
   </div>
   <div class="row_posters">
-  <div class="content__main-title">
-    <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
-    <h4 class="content__main-title-right">
-      <a href="">Xem Tất Cả</a>
-    </h4>
-  </div>
-  <div class="content__main-posters-row">
-    {{#each phimmoi}}
+    <div class="content__main-title">
+      <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
+      <h4 class="content__main-title-right">
+        <a href="">Xem Tất Cả</a>
+      </h4>
+    </div>
+    <div class="content__main-posters-row">
+      {{#each phimmoi}}
       <div class="moviesposter-wrapper">
         <a href="/phim/{{slug}}">
           <img src="{{thumb_url}}" alt="{{name}}" />
@@ -114,18 +120,18 @@
         <div class="moviesposter-practice">{{current_episode}}</div>
         <div class="moviesposter-HD">{{quality}}</div>
       </div>
-    {{/each}}
+      {{/each}}
+    </div>
   </div>
-</div>
-<div class="row_posters">
-  <div class="content__main-title">
-    <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
-    <h4 class="content__main-title-right">
-      <a href="">Xem Tất Cả</a>
-    </h4>
-  </div>
-  <div class="content__main-posters-row">
-    {{#each phimle}}
+  <div class="row_posters">
+    <div class="content__main-title">
+      <h3 class="content__main-title-left">Có thể bạn sẽ thích</h3>
+      <h4 class="content__main-title-right">
+        <a href="">Xem Tất Cả</a>
+      </h4>
+    </div>
+    <div class="content__main-posters-row">
+      {{#each phimle}}
       <div class="moviesposter-wrapper">
         <a href="/phim/{{slug}}">
           <img src="{{thumb_url}}" alt="{{name}}" />
@@ -134,9 +140,9 @@
         <div class="moviesposter-practice">{{current_episode}}</div>
         <div class="moviesposter-HD">{{quality}}</div>
       </div>
-    {{/each}}
+      {{/each}}
+    </div>
   </div>
-</div>
 
 
 </div>

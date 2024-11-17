@@ -43,33 +43,40 @@ class HomeController {
   static async slug(req, res) {
     const slug = req.params.slug;
     const apiUrl = `https://phim.nguonc.com/api/film/${slug}`;
-
+  
     try {
       const [phimmoi, phimle, phimbo] = await Promise.all([
         PhimmoiController.phimmoi(),
         PhimleController.phimle(),
         PhimboController.phimbo(),
       ]);
+  
       const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const contentType = response.headers.get("Content-Type");
       if (!contentType || !contentType.includes("application/json")) {
         throw new Error(`Expected JSON, but got: ${contentType}`);
       }
-
+  
       const data = await response.json();
       if (data.status === "success") {
-        console.log(phimmoi);
-        // Render the movie details page
+        const movie = data.movie;
+        const movieNation = movie.category;
+  
+        // Thêm thuộc tính isEpisode cho từng item trong moviePractice
+        const moviePractice = movie.episodes[0].items.map(item => ({
+          ...item,
+          isEpisode: item.slug.startsWith('tap-') // Kiểm tra slug để xác định là tập phim hay không
+        }));
         res.render("movie/details", {
-          movieId: data.movie.id,
-          movie: data.movie,
-          movieNation: data.movie.category,
-          moviePractice: data.movie.episodes[0].items,
-          movieEmbed: data.movie.episodes[0].items[0].embed,
+          movieId: movie.id,
+          movie,
+          movieNation,
+          moviePractice, // Sử dụng moviePractice đã cập nhật
+          movieEmbed: moviePractice.length > 0 ? moviePractice[0].embed : null, // Lấy embed của tập đầu tiên nếu có
           phimmoi,
           phimle,
           phimbo,
@@ -82,44 +89,59 @@ class HomeController {
       res.render("movie/details", { movie: null });
     }
   }
-
-  static tap(req, res) {
+  static async tap(req, res) {
     const slug = req.params.slug;
-    const tap = req.params.name;
+    const tap = req.params.name;  
     const apiUrl = `https://phim.nguonc.com/api/film/${slug}`;
-    console.log(apiUrl);
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success") {
-          const movie = data.movie;
-          const movieId = movie.id;
-          const movieNation = movie.category;
-          const episodes = movie.episodes[0].items;
-
-          const currentEpisode = episodes.find((item) => item.slug === tap);
-          let movieEmbed = null;
-          if (currentEpisode) {
-            movieEmbed = currentEpisode.embed;
-          }
-          console.log(currentEpisode);
-
-          res.render("movie/details", {
-            movieId,
-            movie,
-            movieNation,
-            moviePractice: episodes,
-            movieEmbed,
-          });
-        } else {
-          res.render("movie/details", { movie: null });
+  
+    try {
+      const [phimmoi, phimle, phimbo] = await Promise.all([
+        PhimmoiController.phimmoi(),
+        PhimleController.phimle(),
+        PhimboController.phimbo(),
+      ]);
+  
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const contentType = response.headers.get("Content-Type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(`Expected JSON, but got: ${contentType}`);
+      }
+  
+      const data = await response.json();
+      if (data.status === "success") {
+        const movie = data.movie;
+        const episodes = movie.episodes[0].items.map(item => ({
+          ...item,
+          isEpisode: item.slug.startsWith('tap-') // Thêm thuộc tính isEpisode
+        }));
+  
+        const currentEpisode = episodes.find((item) => item.slug === tap);
+        let movieEmbed = null;
+        if (currentEpisode) {
+          movieEmbed = currentEpisode.embed;
         }
-      })
-      .catch((error) => {
-        console.error("Lỗi mạng:", error.message);
-        res.render("movie/details", { movie: null });
-      });
+  
+        res.render("movie/details", {
+          movieId: movie.id,
+          movie,
+          movieNation: movie.category,
+          moviePractice: episodes, // Sử dụng episodes đã cập nhật
+          movieEmbed,
+          phimmoi,
+          phimle,
+          phimbo,
+        });
+      } else {
+        res.render("movie/details", { movie: null, phimmoi, phimle, phimbo });
+      }
+    } catch (error) {
+      console.error("Lỗi mạng:", error.message);
+      res.render("movie/details", { movie: null, phimmoi, phimle, phimbo });
+    }
   }
   static search(req, res) {
     const key = req.query.keyword.replace(/ /g, "+");
